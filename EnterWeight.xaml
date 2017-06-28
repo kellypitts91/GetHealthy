@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GetHealthy.EnterWeight">
+
+    <!-- Dividing space into a 5*2 Grid -->
+    <Grid BackgroundColor="Beige">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="1.1*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1.1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Image x:Name="imageLogo" Source="logo.png" Aspect="Fill"
+               Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="4" >
+        </Image>
+
+        <!-- Button to click -->
+        <Button x:Name="btnHome" BackgroundColor="LightBlue" 
+                BorderColor="Black"
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="Home"
+                Clicked="btnHomeClicked"  NavigationPage.HasNavigationBar="True">
+        </Button>
+        <Button x:Name="btnConverter" BackgroundColor="LightBlue"
+                BorderColor="Black"
+                Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="Calorie Converter"
+                Clicked="btnConverterClicked" NavigationPage.HasNavigationBar="True">
+        </Button>
+        <Button x:Name="btnFoodDiary" BackgroundColor="LightBlue"
+                BorderColor="Black"
+                Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="Food Diary"
+                Clicked="btnFoodDiaryClicked" NavigationPage.HasNavigationBar="True">
+        </Button>
+        <Button x:Name="btnExercise" BackgroundColor="LightBlue"
+                BorderColor="Black" 
+                Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
+                Text="Enter Exercise"
+                Clicked="btnExerciseClicked" NavigationPage.HasNavigationBar="True">
+        </Button>
+        <Button x:Name="btnWeight" BackgroundColor="Cyan"
+                BorderColor="Black"
+                Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2"
+                Text="Enter Weight"
+                Clicked="btnWeightClicked">
+        </Button>
+
+        <!-- Weigh in Icons -->
+        <Button x:Name="btnTarget"
+                BackgroundColor="LightBlue"
+                BorderColor="Black" BorderWidth="1"
+                Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                Text="Enter Target Weight" Clicked="btnTargetClicked">
+        </Button>
+
+        <Button x:Name="btnHistory"
+                BackgroundColor="LightBlue"
+                BorderColor="Black" BorderWidth="1"
+                Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3"
+                Text="History" Clicked="btnHistoryClicked">
+        </Button>
+
+        <Label x:Name="lblCurrentWeight"
+               Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"
+               VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
+               Margin="10" FontSize="Medium">
+        </Label>
+
+        <Label x:Name="lblDifference"
+               Grid.Row="4" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="3"
+               VerticalTextAlignment="Start" HorizontalTextAlignment="Center"
+               Margin="10" FontSize="Medium">
+        </Label>
+
+        <Label x:Name="lblResult"
+               Grid.Row="5" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6"
+               VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+               Margin="10" FontSize="Medium">
+        </Label>
+
+        <Entry x:Name="entryField"
+                Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
+                VerticalOptions="Center" HorizontalTextAlignment="Center" 
+                Placeholder="Enter weight here">
+        </Entry>
+
+        <Button x:Name="btnAddWeight"
+                BackgroundColor="LightBlue"
+                BorderColor="Black" BorderWidth="1"
+                Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6"
+                Text="Add Weight" Clicked="btnAddWeightClicked">
+        </Button>
+
+        <!-- Target weight icons -->
+        <Label x:Name="lblTargetDifference" IsVisible="False"
+               Grid.Row="4" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="6"
+               VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+               FontSize="Medium">
+        </Label>
+
+        <Entry x:Name="entryTargetWeight" IsVisible="False"
+                Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3"
+                VerticalOptions="Center" HorizontalTextAlignment="Center"
+                Placeholder="Target">
+        </Entry>
+
+        <DatePicker x:Name="dateTargetWeight" IsVisible="False"
+                Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3"
+                VerticalOptions="Center">
+        </DatePicker>
+
+        <Button x:Name="btnAddTargetWeight" IsVisible="False"
+                BackgroundColor="LightBlue"
+                BorderColor="Black" BorderWidth="1"
+                Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6"
+                Text="Add Target Weight" Clicked="btnAddTargetWeightClicked">
+        </Button>
+        <!-- End of Target weight icons -->
+        
+        <!-- History icons -->
+        <Label x:Name="lblHistory" IsVisible="False"
+               Grid.Row="4" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="6"
+               VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
+               Margin="10">
+        </Label>
+    </Grid>
+</ContentPage>
