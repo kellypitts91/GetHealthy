@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace GetHealthy
+namespace GetHealthyApp
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalorieConverter : ContentPage
@@ -17,38 +17,32 @@ namespace GetHealthy
             InitializeComponent();
         }
 
-        private void btnHomeClicked(object sender, EventArgs e)
+        private void BtnHomeClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new MainPage());
         }
 
-        private void btnConverterClicked(object sender, EventArgs e)
+        private void BtnConverterClicked(object sender, EventArgs e)
         {
             lblCalorieResult.Text = "";
         }
 
-        private void btnFoodDiaryClicked(object sender, EventArgs e)
+        private void BtnFoodDiaryClicked(object sender, EventArgs e)
         {
-
+            Navigation.PushAsync(new FoodDiary());
         }
 
-        private void btnExerciseClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new EnterExercise());
-        }
-
-        private void btnWeightClicked(object sender, EventArgs e)
+        private void BtnWeightClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new EnterWeight());
         }
 
-        private void btnCalculateClicked(object sender, EventArgs e)
+        private void BtnCalculateClicked(object sender, EventArgs e)
         {
-            double kj;
-            bool temp = double.TryParse(entryField.Text, out kj);
+            bool temp = double.TryParse(entryField.Text, out double kj);
             if (temp)
             {
-                lblCalorieResult.Text = entryField.Text + "Kj = " + (Math.Round(calculateColorie(kj) * 100)/100).ToString() + " KiloCalories";
+                lblCalorieResult.Text = entryField.Text + "Kj = " + (Math.Round(CalculateColorie(kj) * 100) / 100).ToString() + " KiloCalories";
             }
             else
             {
@@ -56,7 +50,7 @@ namespace GetHealthy
             }
         }
 
-        private double calculateColorie(double kj)
+        private double CalculateColorie(double kj)
         {
             return kj * 0.239006;
         }

@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GetHealthy"
-             x:Class="GetHealthy.MainPage">
+             xmlns:local="clr-namespace:GetHealthyApp"
+             x:Class="GetHealthyApp.MainPage">
 
-    <!-- Dividing space into a 5*2 Grid -->
+    <!-- Dividing space into a 9*6 Grid -->
     <Grid BackgroundColor="Beige">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="1.5*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -18,7 +17,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -26,36 +26,33 @@
         </Grid.ColumnDefinitions>
 
         <Image x:Name="imageLogo" Source="logo.png" Aspect="Fill"
-               Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="4" >
+               Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" >
         </Image>
 
         <!-- Button to click -->
         <Button x:Name="btnHome" BackgroundColor="Cyan" 
                 BorderColor="Black"
-                Grid.Row="0" Grid.Column="0" Text="Home"
-                Clicked="btnHomeClicked"  NavigationPage.HasNavigationBar="True">
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="Home">
         </Button>
         <Button x:Name="btnConverter" BackgroundColor="LightBlue"
                 BorderColor="Black"
-                Grid.Row="1" Grid.Column="0" Text="Calorie Converter"
-                Clicked="btnConverterClicked" NavigationPage.HasNavigationBar="True">
+                Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="Calorie Converter" Clicked="BtnConverterClicked" 
+                NavigationPage.HasNavigationBar="True">
         </Button>
         <Button x:Name="btnFoodDiary" BackgroundColor="LightBlue"
                 BorderColor="Black"
-                Grid.Row="2" Grid.Column="0" Text="Food Diary"
-                Clicked="btnFoodDiaryClicked" NavigationPage.HasNavigationBar="True">
-        </Button>
-        <Button x:Name="btnExercise" BackgroundColor="LightBlue"
-                BorderColor="Black" 
-                Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                Text="Enter Exercise"
-                Clicked="btnExerciseClicked" NavigationPage.HasNavigationBar="True">
+                Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
+                Text="Food Diary" Clicked="BtnFoodDiaryClicked" 
+                NavigationPage.HasNavigationBar="True">
         </Button>
         <Button x:Name="btnWeight" BackgroundColor="LightBlue"
                 BorderColor="Black"
-                Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"
-                Text="Enter Weight"
-                Clicked="btnWeightClicked" NavigationPage.HasNavigationBar="True">
+                Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
+                Text="Enter Weight" Clicked="BtnWeightClicked" 
+                NavigationPage.HasNavigationBar="True">
         </Button>
     </Grid>
+
 </ContentPage>

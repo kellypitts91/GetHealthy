@@ -5,37 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace GetHealthy
+namespace GetHealthyApp
 {
     public partial class MainPage : ContentPage
     {
-        
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void btnHomeClicked(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnConverterClicked(object sender, EventArgs e)
+        private void BtnConverterClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new CalorieConverter());
         }
 
-        private void btnFoodDiaryClicked(object sender, EventArgs e)
+        private void BtnFoodDiaryClicked(object sender, EventArgs e)
         {
-
+            Navigation.PushAsync(new FoodDiary());
         }
 
-        private void btnExerciseClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new EnterExercise());
-        }
-
-        private void btnWeightClicked(object sender, EventArgs e)
+        private void BtnWeightClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new EnterWeight());
         }

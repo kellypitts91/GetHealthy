@@ -5,7 +5,7 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace GetHealthy
+namespace GetHealthyApp
 {
     public partial class App : Application
     {
@@ -13,7 +13,7 @@ namespace GetHealthy
         {
             InitializeComponent();
 
-            //MainPage = new GetHealthy.MainPage();
+            //MainPage = new GetHealthyApp.MainPage();
             MainPage = new NavigationPage(new MainPage());
         }
 
