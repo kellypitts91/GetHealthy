@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GetHealthyApp.CalorieConverter">
+             x:Class="GetHealthyApp.FoodDiary">
 
     <!-- Dividing space into a 9*6 Grid -->
     <Grid BackgroundColor="Beige">
@@ -32,16 +32,17 @@
         <!-- Button to click -->
         <Button x:Name="btnHome" BackgroundColor="LightBlue" 
                 BorderColor="Black"
-                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                Text="Home" Clicked="BtnHomeClicked" 
+                Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2"
+                Text="Home" Clicked="BtnHomeClicked"
                 NavigationPage.HasNavigationBar="True">
         </Button>
-        <Button x:Name="btnConverter" BackgroundColor="Cyan"
+        <Button x:Name="btnConverter" BackgroundColor="LightBlue"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                Text="Calorie Converter" Clicked="BtnConverterClicked">
+                Text="Calorie Converter" Clicked="BtnConverterClicked" 
+                NavigationPage.HasNavigationBar="True">
         </Button>
-        <Button x:Name="btnFoodDiary" BackgroundColor="LightBlue"
+        <Button x:Name="btnFoodDiary" BackgroundColor="Cyan"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
                 Text="Food Diary" Clicked="BtnFoodDiaryClicked" 
@@ -54,29 +55,44 @@
                 NavigationPage.HasNavigationBar="True">
         </Button>
 
-        <Label x:Name="lblCalorieTitle"
-                Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
-                VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
-                FontSize="Large">
-            Kj to KiloCalorie Converter
-        </Label>
-
-        <Label x:Name="lblCalorieResult" 
-               Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"
+        <Label x:Name="lbldateOfEntry"
+               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
-               FontSize="Medium">
+               FontSize="Medium" Text="Select date of entry">
         </Label>
 
-        <Entry x:Name="entryField"
-                Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6"
+        <Label x:Name="lbldateView"
+               Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"
+               VerticalTextAlignment="Center" HorizontalTextAlignment="Center"
+               FontSize="Medium" Text="Select date to view">
+        </Label>
+
+        <DatePicker x:Name="dateOfEntry"
+                Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                VerticalOptions="Center" >
+        </DatePicker>
+
+        <DatePicker x:Name="dateView"
+                Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3"
+                VerticalOptions="Center" DateSelected="DateChanged">
+        </DatePicker>
+
+        <Entry x:Name="entryFood"
+                Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6"
                 VerticalOptions="Center" HorizontalTextAlignment="Center" 
-                Placeholder="Enter Kj here">
+                Placeholder="Enter Food item here">
         </Entry>
 
-        <Button x:Name="btnCalculateCalorie" BackgroundColor="LightBlue"
+        <Label x:Name="lblDisplay"
+               Grid.Row="5" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="6"
+               VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
+               Margin="10" FontSize="Medium">
+        </Label>
+
+        <Button x:Name="btnSubmit" BackgroundColor="LightBlue"
                 BorderColor="Black"
-                Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
-                Text="Calculate" Clicked="BtnCalculateClicked">
+                Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6"
+                Text="Submit" Clicked="BtnSubmitClicked">
         </Button>
     </Grid>
 </ContentPage>
