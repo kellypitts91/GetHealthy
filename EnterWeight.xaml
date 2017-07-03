@@ -70,8 +70,8 @@
 
         <Label x:Name="lblCurrentWeight"
                Grid.Row="3" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="4"
-               VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
-               Margin="10" FontSize="Medium">
+               VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
+               Margin="10, 10, 0, 0" FontSize="Medium">
         </Label>
 
         <Label x:Name="lblDifference"
@@ -127,26 +127,14 @@
 
         <!-- History icons -->
         <Label x:Name="lblHistory" IsVisible="False"
-               Grid.Row="3" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="6"
+               Grid.Row="3" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="6"
                VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
                Margin="10" FontSize="Medium">
         </Label>
 
-        <StackLayout Grid.Row="3" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="6">
-            <Button Text="Get" TextColor="White" BackgroundColor="Red" Clicked="GetWeightInformationClicked" />
-            <Button Text="Post" TextColor="White" BackgroundColor="Red" Clicked="PostWeightInformationClicked" />
-            <ListView x:Name="enterWeightList" HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding currentWeight, StringFormat='Current Weight: {0:N}'}" HorizontalOptions="FillAndExpand" Margin="20,0,0,0" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding targetWeight, StringFormat='Target Weight: {0:N}'}" VerticalTextAlignment="Center" Margin="0,0,20,0" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+        <!-- Invisible labels, used to store values from database -->
+        <Label x:Name="lblCWeight" IsVisible="False"></Label>
+        <Label x:Name="lblTWeight" IsVisible="False"></Label>
+
     </Grid>
 </ContentPage>

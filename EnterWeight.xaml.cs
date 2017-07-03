@@ -17,25 +17,12 @@ namespace GetHealthyApp
         public EnterWeight()
         {
             InitializeComponent();
+            GetWeightRequest();
+            GetHistoryRequest();
         }
 
+        //Local variables
         MobileServiceClient client = AzureManager.AzureManagerInstance.AzureClient;
-        async void GetWeightInformationClicked(object sender, EventArgs e)
-        {
-            List<DataModels.EnterWeight> weightInformation = await AzureManager.AzureManagerInstance.GetWeightInformation();
-            enterWeightList.ItemsSource = weightInformation;
-        }
-        
-        async void PostWeightInformationClicked(object sender, EventArgs e)
-        {
-            DataModels.EnterWeight model = new DataModels.EnterWeight()
-            {
-                currentWeight = float.Parse(entryField.Text),
-                targetWeight = float.Parse(entryTargetWeight.Text)
-            };
-            await AzureManager.AzureManagerInstance.PostWeightInformation(model);
-        }
-
         static List<double> weightHistoryList = new List<double>();
         static List<string> weightHistoryTimeList = new List<string>();
         static double difference = 0;
@@ -68,6 +55,74 @@ namespace GetHealthyApp
 
             btnTarget.BackgroundColor = Color.LightBlue;
             btnHistory.BackgroundColor = Color.LightBlue;
+            
+            //get information from database
+            GetWeightRequest();
+        }
+
+        async void GetHistoryRequest()
+        {
+            List<Historydb> historyInformation = await AzureManager.AzureManagerInstance.GetHistoryInformation();
+            lblHistory.Text = "";
+            weightHistoryList.Clear();
+            weightHistoryTimeList.Clear();
+            FormatDateString(historyInformation);
+            DisplayCurrentWeight();
+        }
+
+        private void FormatDateString(List<Historydb> historyInformation)
+        {
+            //going through the list and displaying the history of weight inputs
+            //in descending order
+            for (int i = historyInformation.Count - 1; i >= 0; i--)
+            {
+                lblHistory.Text += "Weight: " + historyInformation[i].CurrentWeight.ToString() + " Kg \t";
+                weightHistoryList.Add(historyInformation[i].CurrentWeight);
+
+                //formating date/time string
+                string d = historyInformation[i].CurrentDate.Day.ToString();
+                string m = historyInformation[i].CurrentDate.Month.ToString();
+                string y = historyInformation[i].CurrentDate.Year.ToString();
+                string hour = historyInformation[i].CurrentDate.Hour.ToString();
+                string min = historyInformation[i].CurrentDate.Minute.ToString();
+
+                //add leading zeros
+                d = AddLeadingZero(d);
+                m = AddLeadingZero(m);
+                hour = AddLeadingZero(hour);
+                min = AddLeadingZero(min);
+                string day = d + "/" + m + "/" + y + " " + hour + ":" + min;
+
+                lblHistory.Text += "Date: " + day + "\n\n";
+
+                weightHistoryTimeList.Add(day); // dd/mm/yyyy hh:mm
+            }
+        }
+
+        private static string AddLeadingZero(string num)
+        {
+            if (int.Parse(num) < 10)
+            {
+                num = "0" + num;
+            }
+            return num;
+        }
+
+        async void GetWeightRequest()
+        {
+            //getting information from database
+            List<DataModels.EnterWeight> weightInformation = await AzureManager.AzureManagerInstance.GetWeightInformation();
+            int count = weightInformation.Count;
+            if(count == 0)
+            {
+                return; // first time user
+            }
+            DataModels.EnterWeight last = weightInformation[count - 1];
+
+            lblCWeight.Text = last.CurrentWeight.ToString();
+            lblTWeight.Text = last.TargetWeight.ToString();
+
+            DisplayCurrentWeight();
         }
 
         private void BtnTargetClicked(object sender, EventArgs e)
@@ -106,69 +161,61 @@ namespace GetHealthyApp
             lblResult.IsVisible = false;
         }
 
-        private void BtnAddWeightClicked(object sender, EventArgs e)
+        async void BtnAddWeightClicked(object sender, EventArgs e)
         {
-            DisplayCurrentWeight();
+            //DisplayCurrentWeight();
+            await PostHistoryRequest();
+            GetHistoryRequest();
+            await UpdateWeightRequest();
+            GetWeightRequest();
         }
 
         private void DisplayCurrentWeight()
         {
-            double weight = FillList();
-
             lblCurrentWeight.Text = "";
             int count = weightHistoryList.Count;
-            if (count != 0 || weight != -1.0)   //if weight is -1.0, this could mean incorrect value entered 
-                                                //or re opening tab (want to display the previous values)
-            {
-                lblCurrentWeight.Text += "Weight: " + weightHistoryList[count - 1] + " Kg\nDate: " + weightHistoryTimeList[count - 1] + "\n\n";
-            }
+            //if (count != 0 || weight != -1.0)   //if weight is -1.0, this could mean incorrect value entered 
+            //                                    //or re opening tab (want to display the previous values)
+            //{
+            //    lblCurrentWeight.Text += "Weight: " + weightHistoryList[count - 1] + " Kg\nDate: " + weightHistoryTimeList[count - 1] + "\n\n";
+            //}
 
-            if ((weightHistoryList.Count > 1) && (weight != -1.0))
+            //if ((weightHistoryList.Count > 1) && (weight != -1.0))
+            //{
+            //    lblDifference.Text = "Difference:\n";
+            //    difference = CalculateDifference(weight);
+            //    lblDifference.Text += Math.Abs(difference) + " Kg";
+            //}
+            //else if ((weightHistoryList.Count > 1) || (weight == -1.0)) //ensure to display values that were previously entered
+            //{
+            //    lblDifference.Text = "Difference:\n";
+            //    lblDifference.Text += Math.Abs(difference) + " Kg";
+            //}
+            if(count == 0)
             {
-                lblDifference.Text = "Difference:\n";
+                return;
+            }
+            lblCurrentWeight.Text = "Weight: " + lblCWeight.Text + " Kg\nDate: " + weightHistoryTimeList[count - 1];
+
+            lblDifference.Text = "Difference:\n";
+            bool temp = double.TryParse(lblCWeight.Text, out double weight);
+            if(temp)
+            {
                 difference = CalculateDifference(weight);
-                lblDifference.Text += Math.Abs(difference) + " Kg";
             }
-            else if ((weightHistoryList.Count > 1) || (weight == -1.0)) //ensure to display values that were previously entered
-            {
-                lblDifference.Text = "Difference:\n";
-                lblDifference.Text += Math.Abs(difference) + " Kg";
-            }
-        }
-
-        private double FillList()
-        {
-            //ensures only 10 previous entries are displayed in history
-            if (weightHistoryList.Count == 10)
-            {
-                //remove first item from list
-                weightHistoryList.RemoveAt(0);
-                weightHistoryTimeList.RemoveAt(0);
-            }
-
-            bool temp = double.TryParse(entryField.Text, out double weight);
-
-            //checking that the user entered a correct value
-            if (temp)
-            {
-                weightHistoryList.Add(weight);
-                weightHistoryTimeList.Add(DateTime.Now.ToString("dd-MMM-yyyy HH:mm"));
-                return weight;
-            }
-            else
-            {
-                //return -1.0 if user did not enter a correct value
-                return -1.0;
-            }
+            lblDifference.Text += Math.Abs(difference) + " Kg";
         }
 
         private double CalculateDifference(double weight)
         {
             //getting the last item in the list
             int count = weightHistoryList.Count();
-
+            if(count < 2)
+            {
+                return 0;
+            }
             //checking if new weight entered is less or more than the last entry
-            if (weight <= weightHistoryList[count - 2])
+            if (weight <= weightHistoryList[1])
             {
                 //lost weight
                 lblDifference.Text += "-";
@@ -181,35 +228,117 @@ namespace GetHealthyApp
                 lblDifference.TextColor = Color.Red;
             }
             //return the difference
-            return weightHistoryList[count - 2] - weight;
+            return weightHistoryList[1] - weight;
         }
 
-        private void BtnAddTargetWeightClicked(object sender, EventArgs e)
+        async void BtnAddTargetWeightClicked(object sender, EventArgs e)
         {
-            double weeksRemaining = Math.Round((GetDaysRemaining() / 7) + 1);
-            double kgPerWeek;
-            if (CalculateTargetWeight() != -1.0)
+            EnterTargetWeight();
+            GetWeightRequest();
+            await UpdateWeightRequest();
+            GetWeightRequest();
+        }
+
+        private async Task PostHistoryRequest()
+        {
+            bool temp = float.TryParse(entryField.Text, out float c);
+            if(temp)
             {
-                //if less than 1 week to go
-                if (GetDaysRemaining() > 7)
+                Historydb model = new Historydb()
                 {
-                    kgPerWeek = Math.Round((CalculateTargetWeight() / weeksRemaining) * 100) / 100;
-                    //display target goal statistics
-                    lblTargetDifference.Text = "To reach your target weight of " +
-                        entryTargetWeight.Text + " Kg\nYou must lose " +
-                        (Math.Round(CalculateTargetWeight() * 100) / 100).ToString() + " Kg in " +
-                        Math.Round(weeksRemaining).ToString() + " weeks\nYou must lose " +
-                        kgPerWeek + " Kg per week";
-                }
-                else
+                    CurrentWeight = c,
+                    CurrentDate = DateTime.Now
+                };
+                await AzureManager.AzureManagerInstance.PostHistoryInformation(model);
+            }
+        }
+
+        private async Task UpdateWeightRequest()
+        {
+            bool temp1 = float.TryParse(entryField.Text, out float cWeight);
+            bool temp2 = float.TryParse(entryTargetWeight.Text, out float tWeight);
+            DataModels.EnterWeight model;
+            if (!temp1) //checking if valid input/or empty
+            {
+                //updating values in database
+                model = new DataModels.EnterWeight()
                 {
-                    kgPerWeek = Math.Round((CalculateTargetWeight()) * 100) / 100;
-                    //display target goal statistics
-                    lblTargetDifference.Text = "To reach your target weight of " +
-                        entryTargetWeight.Text + " Kg\nYou must lose " +
-                        Math.Round(CalculateTargetWeight()).ToString() + " Kg in " +
-                        Math.Round(GetDaysRemaining()).ToString() + " days";
-                }
+                    ID = "1",
+                    CurrentWeight = float.Parse(lblCWeight.Text),
+                    TargetWeight = tWeight,
+                    TargetDate = dateTargetWeight.Date
+                };
+            }
+            else if (!temp2) //checking if valid input/or empty
+            {
+                //updating values in database
+                model = new DataModels.EnterWeight()
+                {
+                    ID = "1",
+                    CurrentWeight = cWeight,
+                    TargetWeight = float.Parse(lblTWeight.Text),
+                    TargetDate = dateTargetWeight.Date
+                };
+            } else
+            {
+                model = new DataModels.EnterWeight()
+                {
+                    ID = "1",
+                    CurrentWeight = cWeight,
+                    TargetWeight = tWeight,
+                    TargetDate = dateTargetWeight.Date
+                };
+            }
+
+            try
+            {
+                await AzureManager.AzureManagerInstance.UpdateWeightInformation(model);
+            } catch (ArgumentException)
+            {
+                lblCWeight.Text = "ID does not exist in Database";
+            }
+        }
+
+        private void EnterTargetWeight()
+        {
+            double weight = CalculateTargetWeight();
+            if ((weight > -1.0) && (GetDaysRemaining() > 7))
+            {
+                DisplayTargetWeight("lose", "weeks");
+            } else if ((weight < -1.0) && (GetDaysRemaining() > 7))
+            {
+                DisplayTargetWeight("gain", "weeks");
+            } else if ((weight > -1.0) && (GetDaysRemaining() < 7))
+            {
+                DisplayTargetWeight("lose", "days");
+            } else if ((weight < -1.0) && (GetDaysRemaining() < 7))
+            {
+                DisplayTargetWeight("gain", "days");
+            }
+        }
+
+        private void DisplayTargetWeight(string loseGain, string dayWeek)
+        {
+            double weeksRemaining;
+            if (dayWeek == "weeks")
+            {
+                weeksRemaining = Math.Round((GetDaysRemaining() / 7) + 1);
+            } else
+            {
+                weeksRemaining = GetDaysRemaining();
+            }
+             
+            //display target goal statistics
+            lblTargetDifference.Text = "To reach your target weight of " +
+                entryTargetWeight.Text + " Kg\nYou must " + loseGain + " " +
+                Math.Abs((Math.Round(CalculateTargetWeight() * 100) / 100)).ToString() + " Kg in " +
+                Math.Round(weeksRemaining).ToString() + " " + dayWeek + "\n";
+            
+            //if less than 1 week to go
+            if (GetDaysRemaining() > 7)
+            {
+                lblTargetDifference.Text += "You must " + loseGain + " " +
+                    Math.Abs((Math.Round((CalculateTargetWeight() / weeksRemaining) * 100) / 100)) + " Kg per week";
             }
         }
 
@@ -222,7 +351,8 @@ namespace GetHealthyApp
                 lblTargetDifference.Text = "Please enter a current weight first.";
                 return -1.0;
             }
-            double weight = weightHistoryList[count - 1];
+            //double weight = weightHistoryList[count - 1];
+            double weight = weightHistoryList[0];
 
             bool temp = double.TryParse(entryTargetWeight.Text, out double targetWeight);
 
@@ -243,12 +373,7 @@ namespace GetHealthyApp
 
         private void DisplayHistory()
         {
-            //going through the list and displaying the history of weight inputs
-            //in descending order
-            for (int i = weightHistoryList.Count; i > 0; i--)
-            {
-                lblHistory.Text += "Weight: " + weightHistoryList[i - 1] + " Kg \t Date: " + weightHistoryTimeList[i - 1] + "\n\n";
-            }
+            GetHistoryRequest();
         }
     }
 }
