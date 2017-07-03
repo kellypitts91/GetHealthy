@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GetHealthyApp.DataModels
 {
-    public class EnterWeight
+    class Historydb
     {
         [JsonProperty(PropertyName = "Id")]
         public string ID { get; set; }
@@ -15,10 +15,7 @@ namespace GetHealthyApp.DataModels
         [JsonProperty(PropertyName = "currentWeight")]
         public float CurrentWeight { get; set; }
 
-        [JsonProperty(PropertyName = "targetWeight")]
-        public float TargetWeight { get; set; }
-
-        [JsonProperty(PropertyName = "targetDate")]
-        public DateTime TargetDate { get; set; }
+        [JsonProperty(PropertyName = "currentDate")]
+        public DateTime CurrentDate { get; set; }
     }
 }
