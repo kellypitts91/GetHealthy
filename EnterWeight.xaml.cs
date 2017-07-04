@@ -68,6 +68,7 @@ namespace GetHealthyApp
             weightHistoryTimeList.Clear();
             FormatDateString(historyInformation);
             DisplayCurrentWeight();
+            EnterTargetWeight();
         }
 
         private void FormatDateString(List<Historydb> historyInformation)
@@ -121,6 +122,7 @@ namespace GetHealthyApp
 
             lblCWeight.Text = last.CurrentWeight.ToString();
             lblTWeight.Text = last.TargetWeight.ToString();
+            lblTDate.Text = last.TargetDate.ToString();
 
             DisplayCurrentWeight();
         }
@@ -163,7 +165,6 @@ namespace GetHealthyApp
 
         async void BtnAddWeightClicked(object sender, EventArgs e)
         {
-            //DisplayCurrentWeight();
             await PostHistoryRequest();
             GetHistoryRequest();
             await UpdateWeightRequest();
@@ -174,32 +175,23 @@ namespace GetHealthyApp
         {
             lblCurrentWeight.Text = "";
             int count = weightHistoryList.Count;
-            //if (count != 0 || weight != -1.0)   //if weight is -1.0, this could mean incorrect value entered 
-            //                                    //or re opening tab (want to display the previous values)
-            //{
-            //    lblCurrentWeight.Text += "Weight: " + weightHistoryList[count - 1] + " Kg\nDate: " + weightHistoryTimeList[count - 1] + "\n\n";
-            //}
 
-            //if ((weightHistoryList.Count > 1) && (weight != -1.0))
-            //{
-            //    lblDifference.Text = "Difference:\n";
-            //    difference = CalculateDifference(weight);
-            //    lblDifference.Text += Math.Abs(difference) + " Kg";
-            //}
-            //else if ((weightHistoryList.Count > 1) || (weight == -1.0)) //ensure to display values that were previously entered
-            //{
-            //    lblDifference.Text = "Difference:\n";
-            //    lblDifference.Text += Math.Abs(difference) + " Kg";
-            //}
+            //list is empty
             if(count == 0)
             {
                 return;
             }
+
+            //first time user
+            if(IsNull(lblCWeight.Text)) {
+                return;
+            }
+
             lblCurrentWeight.Text = "Weight: " + lblCWeight.Text + " Kg\nDate: " + weightHistoryTimeList[count - 1];
 
             lblDifference.Text = "Difference:\n";
-            bool temp = double.TryParse(lblCWeight.Text, out double weight);
-            if(temp)
+            bool result = double.TryParse(lblCWeight.Text, out double weight);
+            if(result)
             {
                 difference = CalculateDifference(weight);
             }
@@ -231,6 +223,15 @@ namespace GetHealthyApp
             return weightHistoryList[1] - weight;
         }
 
+        private bool IsNull(string text)
+        {
+            if (text == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         async void BtnAddTargetWeightClicked(object sender, EventArgs e)
         {
             EnterTargetWeight();
@@ -241,24 +242,38 @@ namespace GetHealthyApp
 
         private async Task PostHistoryRequest()
         {
-            bool temp = float.TryParse(entryField.Text, out float c);
-            if(temp)
+            bool result = float.TryParse(entryField.Text, out float c);
+            if(result)
             {
+                lblResult.Text = "";
                 Historydb model = new Historydb()
                 {
                     CurrentWeight = c,
                     CurrentDate = DateTime.Now
                 };
                 await AzureManager.AzureManagerInstance.PostHistoryInformation(model);
+            } else
+            {
+                lblResult.Text = "Error: Invalid number, please enter a valid number";
             }
         }
 
         private async Task UpdateWeightRequest()
         {
-            bool temp1 = float.TryParse(entryField.Text, out float cWeight);
-            bool temp2 = float.TryParse(entryTargetWeight.Text, out float tWeight);
+            bool resultCurrent = float.TryParse(entryField.Text, out float cWeight);
+            bool resultTarget = float.TryParse(entryTargetWeight.Text, out float tWeight);
             DataModels.EnterWeight model;
-            if (!temp1) //checking if valid input/or empty
+
+            if (IsNull(lblCWeight.Text) )
+            {
+                lblCWeight.Text = "0";
+            }
+            if (IsNull(lblTWeight.Text))
+            {
+                lblTWeight.Text = "0";
+            }
+
+            if (!resultCurrent) //checking if valid input/or empty
             {
                 //updating values in database
                 model = new DataModels.EnterWeight()
@@ -268,8 +283,7 @@ namespace GetHealthyApp
                     TargetWeight = tWeight,
                     TargetDate = dateTargetWeight.Date
                 };
-            }
-            else if (!temp2) //checking if valid input/or empty
+            } else if (!resultTarget) //checking if valid input/or empty
             {
                 //updating values in database
                 model = new DataModels.EnterWeight()
@@ -281,6 +295,7 @@ namespace GetHealthyApp
                 };
             } else
             {
+                //updating values in database
                 model = new DataModels.EnterWeight()
                 {
                     ID = "1",
@@ -290,28 +305,38 @@ namespace GetHealthyApp
                 };
             }
 
+            if(weightHistoryList.Count == 0)
+            {
+                //first time user
+                await AzureManager.AzureManagerInstance.PostWeightInformation(model);
+                return;
+            }
+
             try
             {
+                //update existing row
                 await AzureManager.AzureManagerInstance.UpdateWeightInformation(model);
-            } catch (ArgumentException)
+            }
+            catch (ArgumentException)
             {
-                lblCWeight.Text = "ID does not exist in Database";
+                lblResult.Text = "ID does not exist in Database";
             }
         }
 
         private void EnterTargetWeight()
         {
             double weight = CalculateTargetWeight();
-            if ((weight > -1.0) && (GetDaysRemaining() > 7))
+            double daysRemaining = GetDaysRemaining();
+            if ((weight > -1.0) && (daysRemaining > 6))
             {
                 DisplayTargetWeight("lose", "weeks");
-            } else if ((weight < -1.0) && (GetDaysRemaining() > 7))
+            } else if ((weight < -1.0) && (daysRemaining > 6))
             {
                 DisplayTargetWeight("gain", "weeks");
-            } else if ((weight > -1.0) && (GetDaysRemaining() < 7))
+            } else if ((weight > -1.0) && (daysRemaining <= 6))
             {
                 DisplayTargetWeight("lose", "days");
-            } else if ((weight < -1.0) && (GetDaysRemaining() < 7))
+            } else if ((weight < -1.0) && (daysRemaining <= 6))
             {
                 DisplayTargetWeight("gain", "days");
             }
@@ -319,23 +344,40 @@ namespace GetHealthyApp
 
         private void DisplayTargetWeight(string loseGain, string dayWeek)
         {
+            //first time user
+            if(IsNull(lblTWeight.Text))
+            {
+                return;
+            }
             double weeksRemaining;
+            double daysRemaining = GetDaysRemaining();
+            if(daysRemaining == -999.0) //high value to check for error
+            {
+                return;
+            }
+
             if (dayWeek == "weeks")
             {
-                weeksRemaining = Math.Round((GetDaysRemaining() / 7) + 1);
+                weeksRemaining = Math.Round((daysRemaining / 7) + 1);
             } else
             {
-                weeksRemaining = GetDaysRemaining();
+                weeksRemaining = daysRemaining;
+            }
+
+            if(weeksRemaining <= 0)
+            {
+                lblTargetDifference.Text = "Please select a date greater than today";
+                return;
             }
              
             //display target goal statistics
             lblTargetDifference.Text = "To reach your target weight of " +
-                entryTargetWeight.Text + " Kg\nYou must " + loseGain + " " +
+                lblTWeight.Text + " Kg\nYou must " + loseGain + " " +
                 Math.Abs((Math.Round(CalculateTargetWeight() * 100) / 100)).ToString() + " Kg in " +
                 Math.Round(weeksRemaining).ToString() + " " + dayWeek + "\n";
             
             //if less than 1 week to go
-            if (GetDaysRemaining() > 7)
+            if (daysRemaining > 6)
             {
                 lblTargetDifference.Text += "You must " + loseGain + " " +
                     Math.Abs((Math.Round((CalculateTargetWeight() / weeksRemaining) * 100) / 100)) + " Kg per week";
@@ -351,24 +393,28 @@ namespace GetHealthyApp
                 lblTargetDifference.Text = "Please enter a current weight first.";
                 return -1.0;
             }
-            //double weight = weightHistoryList[count - 1];
             double weight = weightHistoryList[0];
 
-            bool temp = double.TryParse(entryTargetWeight.Text, out double targetWeight);
+            bool result = double.TryParse(lblTWeight.Text, out double targetWeight);
 
-            if (temp)
+            if (result)
             {
                 return weight - targetWeight;
             }
-            return -1.0;
+            return -999.0;
         }
 
         private double GetDaysRemaining()
         {
             DateTime currentDate = DateTime.Now;
-            DateTime targetDate = dateTargetWeight.Date;
-
-            return (targetDate - currentDate).TotalDays;
+            bool result = DateTime.TryParse(lblTDate.Text, out DateTime targetDate);
+            if(result)
+            {
+                return (targetDate - currentDate).TotalDays;
+            } else
+            {
+                return -1.0;
+            }
         }
 
         private void DisplayHistory()
