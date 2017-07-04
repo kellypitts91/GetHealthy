@@ -135,6 +135,7 @@
         <!-- Invisible labels, used to store values from database -->
         <Label x:Name="lblCWeight" IsVisible="False"></Label>
         <Label x:Name="lblTWeight" IsVisible="False"></Label>
+        <Label x:Name="lblTDate" IsVisible="False"></Label>
 
     </Grid>
 </ContentPage>
