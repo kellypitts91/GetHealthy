@@ -42,7 +42,8 @@
     <Compile Include="CalorieConverter.xaml.cs">
       <DependentUpon>CalorieConverter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\EnterWeight.cs" />
+    <Compile Include="DataModels\FoodDiarydb.cs" />
+    <Compile Include="DataModels\Weightdb.cs" />
     <Compile Include="DataModels\Historydb.cs" />
     <Compile Include="EnterWeight.xaml.cs">
       <DependentUpon>EnterWeight.xaml</DependentUpon>

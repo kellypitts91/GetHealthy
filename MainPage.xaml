@@ -8,7 +8,7 @@
     <Grid BackgroundColor="Beige">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="1.1*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -53,6 +53,35 @@
                 Text="Enter Weight" Clicked="BtnWeightClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
+
+        <Label x:Name="lblAbout"
+                Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="6"
+                VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
+                Margin="10" FontSize="Medium">
+        </Label>
+
+        <Label x:Name="lblContact" Text="Contact Information:"
+                Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6"
+                VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
+                Margin="10" FontSize="Medium">
+        </Label>
+
+        <Label Text="&#128222; 0800 GET HEALTHY"
+                Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6"
+                VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
+                Margin="10" FontSize="Medium">
+        </Label>
+        
+        <Label Text="&#9993; info@gethealthy.com"
+                Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
+                VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
+                Margin="10" FontSize="Medium">
+        </Label>
+
+        <Label Text="&#x00A9; GetHealthy 2017"
+                Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6"
+                VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
+        </Label>
     </Grid>
 
 </ContentPage>
