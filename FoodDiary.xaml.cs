@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetHealthyApp.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,11 @@ namespace GetHealthyApp
         public FoodDiary()
         {
             InitializeComponent();
+            GetFoodDiaryRequest();
         }
 
-        static List<string> datesEnteredList = new List<string>();
-        static List<List<string>> foodList = new List<List<string>>();
+        //static List<string> foodList = new List<string>();
+        //static List<DateTime> dateList = new List<DateTime>();
 
         private void BtnHomeClicked(object sender, EventArgs e)
         {
@@ -30,87 +32,92 @@ namespace GetHealthyApp
             Navigation.PushAsync(new CalorieConverter());
         }
 
-        private void BtnFoodDiaryClicked(object sender, EventArgs e)
-        {
-
-        }
-
         private void BtnWeightClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new EnterWeight());
         }
 
-        private void BtnSubmitClicked(object sender, EventArgs e)
+        async void BtnSubmitClicked(object sender, EventArgs e)
         {
-            int newDay = dateOfEntry.Date.Day;
-            int newMonth = dateOfEntry.Date.Month;
-            int newYear = dateOfEntry.Date.Year;
-
-            string newDate = newDay.ToString() + "/" + newMonth.ToString() + "/" + newYear.ToString();
-
-            if (datesEnteredList.Contains(newDate))
-            {
-                int pos = datesEnteredList.IndexOf(newDate);
-                foodList[pos].Add(entryFood.Text);
-            }
-            else
-            {
-                datesEnteredList.Add(newDate);
-                foodList.Add(new List<string> { entryFood.Text });
-            }
-
-            int newDay1 = dateView.Date.Day;
-            int newMonth1 = dateView.Date.Month;
-            int newYear1 = dateView.Date.Year;
-
-            string newDate1 = newDay1.ToString() + "/" + newMonth1.ToString() + "/" + newYear1.ToString();
-
-            Display(newDate1);
+            await PostFoodDiaryRequest();
+            GetFoodDiaryRequest();
+            entryFood.Text = "";
+            entryFood.Placeholder = "Enter food item here";
         }
 
-        private void Display(string day)
+        private string ConvertDateToString(DateTime date)
         {
-            //int count = 0;
-            //foreach (List<string> item in foodList)
-            //{
-            //    lblDisplay.Text += datesEnteredList[count] + "\n";
-            //    foreach (string item2 in item)
-            //    {
-            //        lblDisplay.Text += item2 + ", ";
-            //    }
-            //    lblDisplay.Text += "\n";
-            //    count++;
-            //}
+            string d = date.Day.ToString();
+            string m = date.Month.ToString();
+            string y = date.Year.ToString();
 
-            //working on this, getting some minor errors
-            int count = -1;
-            if (datesEnteredList.Contains(day))
+            //add leading zeros
+            d = AddLeadingZero(d);
+            m = AddLeadingZero(m);
+            return (d + "/" + m + "/" + y);
+        }
+
+        //Add leading zero to number to format date and time string
+        private static string AddLeadingZero(string num)
+        {
+            if (int.Parse(num) < 10)
             {
-                count = datesEnteredList.IndexOf(day);
+                num = "0" + num;
             }
-            if (count != -1)
-            {
-                lblDisplay.Text = datesEnteredList[count] + "\n";
-                foreach (List<string> item in foodList)
-                {
-                    lblDisplay.Text += item[count] + "\n";
-                }
-            }
-            else
-            {
-                lblDisplay.Text = "There are no entries for " + day + ". Please select another date.";
-            }
+            return num;
         }
 
         private void DateChanged(object sender, DateChangedEventArgs e)
         {
-            int newDay = dateView.Date.Day;
-            int newMonth = dateView.Date.Month;
-            int newYear = dateView.Date.Year;
+            GetFoodDiaryRequest();
+        }
 
-            string newDate = newDay.ToString() + "/" + newMonth.ToString() + "/" + newYear.ToString();
+        async void GetFoodDiaryRequest()
+        {
+            List<FoodDiarydb> foodDiaryInformation = await AzureManager.AzureManagerInstance.GetFoodDiaryInformation();
 
-            //Display(newDate);
+            bool match = false;
+            string day = ConvertDateToString(dateView.Date);
+            lblError.Text = "Date: " + day + "\n\n";
+            lblDisplay1.Text = "";
+            lblDisplay2.Text = "";
+            int count = 0;
+            foreach (var item in foodDiaryInformation)
+            {
+                if (dateView.Date == item.DateOfEntry.Date)
+                {
+                    //Spliting text into 2 columns
+                    if(count < 7)
+                    {
+                        lblDisplay1.Text += item.FoodItem + "\n";
+                    } else
+                    {
+                        lblDisplay2.Text += item.FoodItem + "\n";
+                    }
+                    match = true;
+                    count++;
+                }
+            }
+            if (!match)
+            {
+                lblError.Text = "There are no entries for " + day + ". Please select another date.";
+            }
+        }
+
+        private async Task PostFoodDiaryRequest()
+        {
+            //Error checking
+            if(entryFood.Text == null || dateOfEntry.Date == null)
+            {
+                return;
+            }
+
+            FoodDiarydb model = new FoodDiarydb()
+            {
+                FoodItem = entryFood.Text,
+                DateOfEntry = dateOfEntry.Date
+            };
+            await AzureManager.AzureManagerInstance.PostFoodDiaryInformation(model);
         }
     }
 }

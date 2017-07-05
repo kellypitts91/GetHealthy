@@ -12,14 +12,16 @@ namespace GetHealthyApp
     {
         private static AzureManager instance;
         private MobileServiceClient client;
-        private IMobileServiceTable<DataModels.EnterWeight> enterWeightTable;
+        private IMobileServiceTable<Weightdb> enterWeightTable;
         private IMobileServiceTable<Historydb> historyTable;
+        private IMobileServiceTable<FoodDiarydb> foodDiaryTable;
 
         private AzureManager()
         {
             this.client = new MobileServiceClient("http://gethealthy.azurewebsites.net");
-            this.enterWeightTable = this.client.GetTable<DataModels.EnterWeight>();
+            this.enterWeightTable = this.client.GetTable<Weightdb>();
             this.historyTable = this.client.GetTable<Historydb>();
+            this.foodDiaryTable = this.client.GetTable<FoodDiarydb>();
         }
 
         public MobileServiceClient AzureClient
@@ -39,22 +41,24 @@ namespace GetHealthyApp
                 return instance;
             }
         }
-
-        public async Task<List<DataModels.EnterWeight>> GetWeightInformation()
+        //Weight Information ------------------------------------------------
+        public async Task<List<Weightdb>> GetWeightInformation()
         {
             return await this.enterWeightTable.ToListAsync();
         }
 
-        public async Task PostWeightInformation(DataModels.EnterWeight enterWeight)
+        public async Task PostWeightInformation(Weightdb enterWeight)
         {
             await this.enterWeightTable.InsertAsync(enterWeight);
         }
 
-        public async Task UpdateWeightInformation(DataModels.EnterWeight enterWeight)
+        public async Task UpdateWeightInformation(Weightdb enterWeight)
         {
             await this.enterWeightTable.UpdateAsync(enterWeight);
         }
+        //End of Weight Information -----------------------------------------
 
+        //History Information -----------------------------------------------
         public async Task<List<Historydb>> GetHistoryInformation()
         {
             return await this.historyTable.ToListAsync();
@@ -68,6 +72,22 @@ namespace GetHealthyApp
         public async Task UpdateHistoryInformation(Historydb history)
         {
             await this.historyTable.UpdateAsync(history);
+        }
+        //End of History Information ----------------------------------------
+
+        public async Task<List<FoodDiarydb>> GetFoodDiaryInformation()
+        {
+            return await this.foodDiaryTable.ToListAsync();
+        }
+
+        public async Task PostFoodDiaryInformation(FoodDiarydb food)
+        {
+            await this.foodDiaryTable.InsertAsync(food);
+        }
+
+        public async Task UpdateFoodDiaryInformation(FoodDiarydb food)
+        {
+            await this.foodDiaryTable.UpdateAsync(food);
         }
     }
 }

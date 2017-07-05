@@ -45,8 +45,7 @@
         <Button x:Name="btnFoodDiary" BackgroundColor="Cyan"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-                Text="Food Diary" Clicked="BtnFoodDiaryClicked" 
-                NavigationPage.HasNavigationBar="True">
+                Text="Food Diary">
         </Button>
         <Button x:Name="btnWeight" BackgroundColor="LightBlue"
                 BorderColor="Black"
@@ -80,14 +79,27 @@
         <Entry x:Name="entryFood"
                 Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6"
                 VerticalOptions="Center" HorizontalTextAlignment="Center" 
-                Placeholder="Enter Food item here">
+                Placeholder="Enter food item here">
         </Entry>
 
-        <Label x:Name="lblDisplay"
+        <Label x:Name="lblError"
                Grid.Row="5" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="6"
                VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
                Margin="10" FontSize="Medium">
         </Label>
+
+        <Label x:Name="lblDisplay1"
+               Grid.Row="6" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2"
+               VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
+               Margin="10" FontSize="Medium">
+        </Label>
+        
+        <Label x:Name="lblDisplay2"
+               Grid.Row="6" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="2"
+               VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
+               Margin="10" FontSize="Medium">
+        </Label>
+
 
         <Button x:Name="btnSubmit" BackgroundColor="LightBlue"
                 BorderColor="Black"

@@ -42,7 +42,7 @@ namespace GetHealthyApp
             bool temp = double.TryParse(entryField.Text, out double kj);
             if (temp)
             {
-                lblCalorieResult.Text = entryField.Text + "Kj = " + (Math.Round(CalculateColorie(kj) * 100) / 100).ToString() + " KiloCalories";
+                lblCalorieResult.Text = entryField.Text + " Kj = " + (Math.Round(CalculateColorie(kj) * 100) / 100).ToString() + " KiloCalories";
             }
             else
             {
