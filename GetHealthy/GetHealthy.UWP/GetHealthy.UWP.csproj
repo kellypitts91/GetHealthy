@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{EB6694D4-9C8A-4162-B8D4-B9E809F8611F}</ProjectGuid>
+    <ProjectGuid>{BC391928-D6B5-411E-A3C3-D060864515CF}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GetHealthy.UWP</RootNamespace>
-    <AssemblyName>GetHealthy.UWP</AssemblyName>
+    <RootNamespace>App2.UWP</RootNamespace>
+    <AssemblyName>App2.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
@@ -17,7 +17,7 @@
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>GetHealthy.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>App2.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -105,7 +105,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="GetHealthy.UWP_TemporaryKey.pfx" />
+    <None Include="App2.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -152,8 +152,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GetHealthy\GetHealthy.csproj">
-      <Project>{7aef8993-681f-4fee-815e-fe7ef01f86af}</Project>
+    <ProjectReference Include="..\App2\GetHealthy.csproj">
+      <Project>{E087553B-D9A9-472D-A204-82016225A975}</Project>
       <Name>GetHealthy</Name>
     </ProjectReference>
   </ItemGroup>
