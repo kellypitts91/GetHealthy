@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GetHealthyApp.FoodDiary">
+             x:Class="GetHealthy.FoodDiary">
 
     <!-- Dividing space into a 9*6 Grid -->
     <Grid BackgroundColor="Beige">
@@ -93,7 +93,7 @@
                VerticalTextAlignment="Start" HorizontalTextAlignment="Start"
                Margin="10" FontSize="Medium">
         </Label>
-        
+
         <Label x:Name="lblDisplay2"
                Grid.Row="6" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="2"
                VerticalTextAlignment="Start" HorizontalTextAlignment="Start"

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GetHealthyApp.DataModels
+namespace GetHealthy.DataModels
 {
-    public class Weightdb
+    class Weightdb
     {
         [JsonProperty(PropertyName = "Id")]
         public string ID { get; set; }

@@ -1,4 +1,4 @@
-﻿using GetHealthyApp.DataModels;
+﻿using GetHealthy.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace GetHealthyApp
+namespace GetHealthy
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FoodDiary : ContentPage
@@ -87,10 +87,11 @@ namespace GetHealthyApp
                 if (dateView.Date == item.DateOfEntry.Date)
                 {
                     //Spliting text into 2 columns
-                    if(count < 7)
+                    if (count < 7)
                     {
                         lblDisplay1.Text += item.FoodItem + "\n";
-                    } else
+                    }
+                    else
                     {
                         lblDisplay2.Text += item.FoodItem + "\n";
                     }
@@ -107,7 +108,7 @@ namespace GetHealthyApp
         private async Task PostFoodDiaryRequest()
         {
             //Error checking
-            if(entryFood.Text == null || dateOfEntry.Date == null)
+            if (entryFood.Text == null || dateOfEntry.Date == null)
             {
                 return;
             }

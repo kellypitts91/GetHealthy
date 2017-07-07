@@ -1,4 +1,4 @@
-﻿using GetHealthyApp.DataModels;
+﻿using GetHealthy.DataModels;
 using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GetHealthyApp
+namespace GetHealthy
 {
     class AzureManager
     {
