@@ -1,4 +1,4 @@
-﻿using GetHealthyApp.DataModels;
+﻿using GetHealthy.DataModels;
 using Microsoft.WindowsAzure.MobileServices;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace GetHealthyApp
+namespace GetHealthy
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EnterWeight : ContentPage
@@ -56,7 +56,7 @@ namespace GetHealthyApp
 
             btnTarget.BackgroundColor = Color.LightBlue;
             btnHistory.BackgroundColor = Color.LightBlue;
-            
+
             //get information from database
             GetWeightRequest();
         }
@@ -142,7 +142,7 @@ namespace GetHealthyApp
 
             //first time user - this is to stop errors occuring
             //if weight label is null - no data in database
-            if (IsNull(lblCWeight.Text) )
+            if (IsNull(lblCWeight.Text))
             {
                 lblCWeight.Text = "0";
             }
@@ -163,7 +163,8 @@ namespace GetHealthyApp
                     TargetWeight = tWeight,
                     TargetDate = dateTargetWeight.Date
                 };
-            } else if (!resultTarget) //checking if valid input/or empty
+            }
+            else if (!resultTarget) //checking if valid input/or empty
             {
                 //updating values in database
                 model = new Weightdb()
@@ -173,7 +174,8 @@ namespace GetHealthyApp
                     TargetWeight = float.Parse(lblTWeight.Text), //user has not entered a value so grabing value from database
                     TargetDate = dateTargetWeight.Date
                 };
-            } else
+            }
+            else
             {
                 //updating values in database
                 model = new Weightdb()
@@ -185,7 +187,7 @@ namespace GetHealthyApp
                 };
             }
 
-            if(weightHistoryList.Count == 0)
+            if (weightHistoryList.Count == 0)
             {
                 //first time user
                 await AzureManager.AzureManagerInstance.PostWeightInformation(model);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace GetHealthyApp
+namespace GetHealthy
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CalorieConverter : ContentPage

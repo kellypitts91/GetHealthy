@@ -1,11 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Xamarin.Forms;
+using GetHealthy.Model;
 
-namespace GetHealthyApp
+namespace GetHealthy
 {
     public partial class MainPage : ContentPage
     {
@@ -32,8 +38,13 @@ namespace GetHealthyApp
 
         private void About()
         {
-            lblAbout.Text = "You will find everything you need to help you kick start your weight loss journey, right from your mobile device.\n"+
+            lblAbout.Text = "You will find everything you need to help you kick start your weight loss journey, right from your mobile device.\n" +
                 "Keep track of your diet and your weight loss to date, see how much weight you need to lose or gain to reach your goal and convert Kilojoules to calories.";
+        }
+
+        private void BtnCameraClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Camera());
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:GetHealthyApp"
-             x:Class="GetHealthyApp.MainPage">
+             xmlns:local="clr-namespace:GetHealthy"
+             x:Class="GetHealthy.MainPage">
 
     <!-- Dividing space into a 9*6 Grid -->
     <Grid BackgroundColor="Beige">
@@ -53,9 +53,16 @@
                 Text="Enter Weight" Clicked="BtnWeightClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
+        <Button x:Name="btnCamera" BackgroundColor="LightBlue"
+                BorderColor="Black"
+                Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
+                Text="Upload Photo" Clicked="BtnCameraClicked" 
+                NavigationPage.HasNavigationBar="True">
+        </Button>
+        
 
         <Label x:Name="lblAbout"
-                Grid.Row="2" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="6"
+                Grid.Row="3" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="6"
                 VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
                 Margin="10" FontSize="Medium">
         </Label>
@@ -63,15 +70,15 @@
         <Label x:Name="lblContact" Text="Contact Information:"
                 Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6"
                 VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
-                Margin="10" FontSize="Medium">
+                Margin="10">
         </Label>
 
         <Label Text="&#128222; 0800 GET HEALTHY"
                 Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6"
                 VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
-                Margin="10" FontSize="Medium">
+                Margin="10">
         </Label>
-        
+
         <Label Text="&#9993; info@gethealthy.com"
                 Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
                 VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
@@ -83,5 +90,4 @@
                 VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
         </Label>
     </Grid>
-
 </ContentPage>
