@@ -15,6 +15,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -25,6 +26,10 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <Image x:Name="imageBackground" Source="background.jpg" Aspect="Fill" Opacity="0.5"
+               Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="6" >
+        </Image>
+        
         <Image x:Name="imageLogo" Source="logo.png" Aspect="Fill"
                Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" >
         </Image>
@@ -35,24 +40,28 @@
                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                 Text="Home">
         </Button>
+        
         <Button x:Name="btnConverter" BackgroundColor="LightBlue"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                 Text="Calorie Converter" Clicked="BtnConverterClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
+        
         <Button x:Name="btnFoodDiary" BackgroundColor="LightBlue"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
                 Text="Food Diary" Clicked="BtnFoodDiaryClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
+        
         <Button x:Name="btnWeight" BackgroundColor="LightBlue"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
                 Text="Enter Weight" Clicked="BtnWeightClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
+        
         <Button x:Name="btnCamera" BackgroundColor="LightBlue"
                 BorderColor="Black"
                 Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
@@ -60,27 +69,21 @@
                 NavigationPage.HasNavigationBar="True">
         </Button>
 
-
         <Label x:Name="lblAbout"
                 Grid.Row="3" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="6"
                 VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
                 Margin="10" FontSize="Medium">
         </Label>
 
-        <Label Text="Contact Information: &#128222; 0800 GET HEALTHY"
-                Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6"
-                VerticalTextAlignment="Center" HorizontalTextAlignment="End"
+        <Label
+                Grid.Row="6" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="6"
+                VerticalTextAlignment="Center" HorizontalTextAlignment="Start"
                 Margin="10">
-        </Label>
-
-        <Label Text="&#9993; info@gethealthy.com"
-                Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
-                VerticalTextAlignment="Center" HorizontalTextAlignment="End"
-                Margin="10">
+            Contact Information:&#10;&#128222; 0800 GET HEALTHY&#10;&#9993; info@gethealthy.com
         </Label>
 
         <Label Text="&#x00A9; GetHealthy 2017"
-                Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6"
+                Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
                 VerticalTextAlignment="Center" HorizontalTextAlignment="Center">
         </Label>
     </Grid>

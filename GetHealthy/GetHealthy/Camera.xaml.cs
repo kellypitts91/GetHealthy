@@ -25,6 +25,7 @@ namespace GetHealthy
         {
             await CrossMedia.Current.Initialize();
 
+            //checks if device has a camera
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
                 await DisplayAlert("No Camera", ":( No camera available.", "OK");
@@ -33,7 +34,7 @@ namespace GetHealthy
 
             MediaFile file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
-                PhotoSize = PhotoSize.Medium,
+                PhotoSize = PhotoSize.Small,
                 Directory = "Sample",
                 Name = $"{DateTime.UtcNow}.jpg"
             });
@@ -45,7 +46,6 @@ namespace GetHealthy
             {
                 return file.GetStream();
             });
-
 
             await MakePredictionRequest(file);
         }
@@ -63,7 +63,7 @@ namespace GetHealthy
 
             client.DefaultRequestHeaders.Add("Prediction-Key", "d234aa7d83dc4779aced0ff5ef5b37e8");
 
-            string url = "https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/ca12f295-7d67-46a5-a30b-2f24b0000f52/image?iterationId=a6f3ba0d-d084-4ad4-9bf5-8559745085aa";
+            string url = "https://southcentralus.api.cognitive.microsoft.com/customvision/v1.0/Prediction/ca12f295-7d67-46a5-a30b-2f24b0000f52/image?iterationId=af054831-c356-4728-881f-6be1fbf70ab4";
 
             HttpResponseMessage response;
 
@@ -71,11 +71,10 @@ namespace GetHealthy
 
             using (var content = new ByteArrayContent(byteData))
             {
-
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 response = await client.PostAsync(url, content);
 
-
+                //if user presses "OK"
                 if (response.IsSuccessStatusCode)
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
@@ -84,9 +83,16 @@ namespace GetHealthy
 
                     double max = responseModel.Predictions.Max(m => m.Probability);
 
-                    TagLabel.Text = (max >= 0.5) ? "Hotdog" : "Not hotdog";
-                    TagLabel.Text = responseModel.Iteration.ToString();
-                    TagLabel.Text += max;
+                    TagLabel.Text = "Tag\n";
+                    PredictionLabel.Text = "Probability\n";
+                    foreach(Prediction item in responseModel.Predictions)
+                    {
+                        if(item.Probability >= 0.5)
+                        {
+                            TagLabel.Text += item.Tag + "\n";
+                            PredictionLabel.Text += item.Probability + "\n";
+                        }
+                    }
                 }
 
                 //Get rid of file once we have finished using it

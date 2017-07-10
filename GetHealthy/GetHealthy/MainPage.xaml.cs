@@ -21,6 +21,7 @@ namespace GetHealthy
             About();
         }
 
+        //Navigation Menu
         private void BtnConverterClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new CalorieConverter());
@@ -36,15 +37,19 @@ namespace GetHealthy
             Navigation.PushAsync(new EnterWeight());
         }
 
+        //camera can only be navigated to from the home screen -- provides less clutter on other pages
+        private void BtnCameraClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Camera());
+        }
+
+        //little blerb explaining what the app is about
         private void About()
         {
             lblAbout.Text = "You will find everything you need to help you kick start your weight loss journey, right from your mobile device.\n" +
                 "Keep track of your diet and your weight loss to date, see how much weight you need to lose or gain to reach your goal and convert Kilojoules to calories.";
         }
 
-        private void BtnCameraClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new Camera());
-        }
+        
     }
 }
