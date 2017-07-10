@@ -17,6 +17,7 @@ namespace GetHealthy
             InitializeComponent();
         }
 
+        //Navigation Menu
         private void BtnHomeClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new MainPage());
@@ -37,11 +38,14 @@ namespace GetHealthy
             Navigation.PushAsync(new EnterWeight());
         }
 
+        //Display the result in a label
         private void BtnCalculateClicked(object sender, EventArgs e)
         {
+            //checking if user has entered a correct value (number)
             bool temp = double.TryParse(entryField.Text, out double kj);
             if (temp)
             {
+                //display result with 2 decimal places
                 lblCalorieResult.Text = entryField.Text + " Kj = " + (Math.Round(CalculateColorie(kj) * 100) / 100).ToString() + " KiloCalories";
             }
             else
@@ -50,6 +54,7 @@ namespace GetHealthy
             }
         }
 
+        //Calculate the conversion from KJ to calories
         private double CalculateColorie(double kj)
         {
             return kj * 0.239006;

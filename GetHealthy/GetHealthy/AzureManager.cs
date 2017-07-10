@@ -10,6 +10,7 @@ namespace GetHealthy
 {
     class AzureManager
     {
+        //private variables
         private static AzureManager instance;
         private MobileServiceClient client;
         private IMobileServiceTable<Weightdb> enterWeightTable;
@@ -18,6 +19,7 @@ namespace GetHealthy
 
         private AzureManager()
         {
+            //initializing variables
             this.client = new MobileServiceClient("http://gethealthy.azurewebsites.net");
             this.enterWeightTable = this.client.GetTable<Weightdb>();
             this.historyTable = this.client.GetTable<Historydb>();
@@ -29,6 +31,7 @@ namespace GetHealthy
             get { return client; }
         }
 
+        //allowing AzureManager to be a singleton - can have only 1 instance
         public static AzureManager AzureManagerInstance
         {
             get
@@ -75,6 +78,7 @@ namespace GetHealthy
         }
         //End of History Information ----------------------------------------
 
+        //Food Diary Information --------------------------------------------
         public async Task<List<FoodDiarydb>> GetFoodDiaryInformation()
         {
             return await this.foodDiaryTable.ToListAsync();
@@ -89,5 +93,6 @@ namespace GetHealthy
         {
             await this.foodDiaryTable.UpdateAsync(food);
         }
+        //End of Food Diary Information -------------------------------------
     }
 }

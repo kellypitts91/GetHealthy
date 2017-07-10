@@ -25,6 +25,10 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <Image x:Name="imageBackground" Source="background.jpg" Aspect="Fill" Opacity="0.5"
+               Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="6" >
+        </Image>
+        
         <Image x:Name="imageLogo" Source="logo.png" Aspect="Fill"
                Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" >
         </Image>

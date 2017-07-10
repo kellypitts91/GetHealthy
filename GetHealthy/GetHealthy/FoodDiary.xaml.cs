@@ -19,9 +19,7 @@ namespace GetHealthy
             GetFoodDiaryRequest();
         }
 
-        //static List<string> foodList = new List<string>();
-        //static List<DateTime> dateList = new List<DateTime>();
-
+        //Navigation Menu
         private void BtnHomeClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new MainPage());
@@ -45,6 +43,7 @@ namespace GetHealthy
             entryFood.Placeholder = "Enter food item here";
         }
 
+        //getting the date part of the DateTime for display purposes
         private string ConvertDateToString(DateTime date)
         {
             string d = date.Day.ToString();
@@ -69,16 +68,18 @@ namespace GetHealthy
 
         private void DateChanged(object sender, DateChangedEventArgs e)
         {
+            //updating the display when the view date is changed
             GetFoodDiaryRequest();
         }
 
         async void GetFoodDiaryRequest()
         {
+            //Getting data from table in database
             List<FoodDiarydb> foodDiaryInformation = await AzureManager.AzureManagerInstance.GetFoodDiaryInformation();
 
             bool match = false;
             string day = ConvertDateToString(dateView.Date);
-            lblError.Text = "Date: " + day + "\n\n";
+            lblError.Text = "Date: " + day + "\n\n"; //using error label to display date
             lblDisplay1.Text = "";
             lblDisplay2.Text = "";
             int count = 0;
@@ -87,7 +88,7 @@ namespace GetHealthy
                 if (dateView.Date == item.DateOfEntry.Date)
                 {
                     //Spliting text into 2 columns
-                    if (count < 7)
+                    if (count < 6)
                     {
                         lblDisplay1.Text += item.FoodItem + "\n";
                     }
@@ -99,7 +100,7 @@ namespace GetHealthy
                     count++;
                 }
             }
-            if (!match)
+            if (!match) //if no matches found, display message
             {
                 lblError.Text = "There are no entries for " + day + ". Please select another date.";
             }
@@ -113,6 +114,7 @@ namespace GetHealthy
                 return;
             }
 
+            //add row to table in database
             FoodDiarydb model = new FoodDiarydb()
             {
                 FoodItem = entryFood.Text,
