@@ -4,7 +4,7 @@
              x:Class="GetHealthy.EnterWeight">
 
     <!-- Dividing space into a 9*6 Grid -->
-    <Grid BackgroundColor="Beige">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.7*" />
             <RowDefinition Height="1.2*" />
@@ -24,34 +24,34 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="imageBackground" Source="background.jpg" Aspect="Fill" Opacity="0.5"
+        <!--<Image x:Name="imageBackground" Source="background.jpg" Aspect="Fill" Opacity="0.5"
                Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="6" >
-        </Image>
+        </Image>-->
 
-        <Image x:Name="imageLogo" Source="logo.png" Aspect="Fill"
+        <Image x:Name="imageLogo" Source="logo2.png" Aspect="Fill"
                Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" >
         </Image>
 
         <!-- Button to click -->
-        <Button x:Name="btnHome" BackgroundColor="LightBlue" 
+        <Button x:Name="btnHome" BackgroundColor="#66b5ff" 
                 BorderColor="Black"
                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                 Text="Home" Clicked="BtnHomeClicked"
                 NavigationPage.HasNavigationBar="True">
         </Button>
-        <Button x:Name="btnConverter" BackgroundColor="LightBlue"
+        <Button x:Name="btnConverter" BackgroundColor="#66b5ff"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                 Text="Calorie Converter" Clicked="BtnConverterClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
-        <Button x:Name="btnFoodDiary" BackgroundColor="LightBlue"
+        <Button x:Name="btnFoodDiary" BackgroundColor="#66b5ff"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
                 Text="Food Diary" Clicked="BtnFoodDiaryClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
-        <Button x:Name="btnWeight" BackgroundColor="Cyan"
+        <Button x:Name="btnWeight" BackgroundColor="#0084ff"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
                 Text="Enter Weight"
@@ -60,14 +60,14 @@
 
         <!-- Weigh in Icons -->
         <Button x:Name="btnTarget"
-                BackgroundColor="LightBlue"
+                BackgroundColor="#66b5ff"
                 BorderColor="Black" BorderWidth="1"
                 Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                 Text="Enter Target Weight" Clicked="BtnTargetClicked">
         </Button>
 
         <Button x:Name="btnHistory"
-                BackgroundColor="LightBlue"
+                BackgroundColor="#66b5ff"
                 BorderColor="Black" BorderWidth="1"
                 Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"
                 Text="History" Clicked="BtnHistoryClicked">
@@ -98,7 +98,7 @@
         </Entry>
 
         <Button x:Name="btnAddWeight"
-                BackgroundColor="LightBlue"
+                BackgroundColor="#66b5ff"
                 BorderColor="Black" BorderWidth="1"
                 Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
                 Text="Add Weight" Clicked="BtnAddWeightClicked">
@@ -123,7 +123,7 @@
         </DatePicker>
 
         <Button x:Name="btnAddTargetWeight" IsVisible="False"
-                BackgroundColor="LightBlue"
+                BackgroundColor="#66b5ff"
                 BorderColor="Black" BorderWidth="1"
                 Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6"
                 Text="Add Target Weight" Clicked="BtnAddTargetWeightClicked">

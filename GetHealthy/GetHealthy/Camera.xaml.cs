@@ -18,6 +18,7 @@ namespace GetHealthy
     {
         public Camera()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
 

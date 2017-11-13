@@ -5,7 +5,7 @@
              x:Class="GetHealthy.MainPage">
 
     <!-- Dividing space into a 9*6 Grid -->
-    <Grid BackgroundColor="Beige">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*" />
             <RowDefinition Height="1.1*" />
@@ -26,43 +26,43 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Image x:Name="imageBackground" Source="background.jpg" Aspect="Fill" Opacity="0.5"
+        <!--<Image x:Name="imageBackground" Source="background.jpg" Aspect="Fill" Opacity="0.5"
                Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="6" >
-        </Image>
+        </Image>-->
         
-        <Image x:Name="imageLogo" Source="logo.png" Aspect="Fill"
+        <Image x:Name="imageLogo" Source="logo2.png" Aspect="Fill"
                Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" >
         </Image>
 
         <!-- Button to click -->
-        <Button x:Name="btnHome" BackgroundColor="Cyan" 
+        <Button x:Name="btnHome" BackgroundColor="#0084ff" 
                 BorderColor="Black"
                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                 Text="Home">
         </Button>
-        
-        <Button x:Name="btnConverter" BackgroundColor="LightBlue"
+
+        <Button x:Name="btnConverter" BackgroundColor="#66b5ff"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                 Text="Calorie Converter" Clicked="BtnConverterClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
-        
-        <Button x:Name="btnFoodDiary" BackgroundColor="LightBlue"
+
+        <Button x:Name="btnFoodDiary" BackgroundColor="#66b5ff"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
                 Text="Food Diary" Clicked="BtnFoodDiaryClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
-        
-        <Button x:Name="btnWeight" BackgroundColor="LightBlue"
+
+        <Button x:Name="btnWeight" BackgroundColor="#66b5ff"
                 BorderColor="Black"
                 Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
                 Text="Enter Weight" Clicked="BtnWeightClicked" 
                 NavigationPage.HasNavigationBar="True">
         </Button>
-        
-        <Button x:Name="btnCamera" BackgroundColor="LightBlue"
+
+        <Button x:Name="btnCamera" BackgroundColor="#66b5ff"
                 BorderColor="Black"
                 Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6"
                 Text="Upload Photo" Clicked="BtnCameraClicked" 

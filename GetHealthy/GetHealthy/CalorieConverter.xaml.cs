@@ -14,6 +14,7 @@ namespace GetHealthy
     {
         public CalorieConverter()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
 

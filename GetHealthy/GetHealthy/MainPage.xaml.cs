@@ -17,6 +17,7 @@ namespace GetHealthy
     {
         public MainPage()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
             About();
         }

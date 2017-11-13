@@ -15,6 +15,7 @@ namespace GetHealthy
     {
         public FoodDiary()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
             GetFoodDiaryRequest();
         }

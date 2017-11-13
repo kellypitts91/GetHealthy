@@ -16,6 +16,7 @@ namespace GetHealthy
     {
         public EnterWeight()
         {
+            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
             GetWeightRequest();
             GetHistoryRequest();
@@ -54,8 +55,8 @@ namespace GetHealthy
             lblResult.IsVisible = true;
             btnAddWeight.IsVisible = true;
 
-            btnTarget.BackgroundColor = Color.LightBlue;
-            btnHistory.BackgroundColor = Color.LightBlue;
+            btnTarget.BackgroundColor = Color.FromRgb(102, 181, 255);
+            btnHistory.BackgroundColor = Color.FromRgb(102, 181, 255);
 
             //get information from database
             GetWeightRequest();
@@ -69,8 +70,8 @@ namespace GetHealthy
             lblTargetDifference.IsVisible = true;
             btnAddTargetWeight.IsVisible = true;
 
-            btnTarget.BackgroundColor = Color.Cyan;
-            btnHistory.BackgroundColor = Color.LightBlue;
+            btnTarget.BackgroundColor = Color.FromRgb(0, 132, 255);
+            btnHistory.BackgroundColor = Color.FromRgb(102, 181, 255);
         }
 
         private void BtnHistoryClicked(object sender, EventArgs e)
@@ -79,8 +80,8 @@ namespace GetHealthy
             lblHistory.IsVisible = true;
             lblHistory.Text = "";
             DisplayHistory();
-            btnHistory.BackgroundColor = Color.Cyan;
-            btnTarget.BackgroundColor = Color.LightBlue;
+            btnHistory.BackgroundColor = Color.FromRgb(0, 132, 255);
+            btnTarget.BackgroundColor = Color.FromRgb(102, 181, 255);
         }
 
         private void Visibility()
